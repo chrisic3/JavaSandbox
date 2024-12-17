@@ -2,7 +2,7 @@ package BankAccountApp;
 
 import java.util.Random;
 
-public class BankAccount {
+public class BankAccount implements IInterest {
     // Properties of a bank account
     private static int id = 1000;  // Internal id
     private String accountNumber;  // Id + random 2-digit number + first 2 of ssn
@@ -25,7 +25,7 @@ public class BankAccount {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     private void setAccountNumber() {
@@ -38,9 +38,26 @@ public class BankAccount {
 
     public void deposit(double amount) {
         this.balance += amount;
+        showBalance();
     }
 
     public void withdrawal(double amount) {
         this.balance -= amount;
+        showBalance();
+    }
+
+    public void showBalance() {
+        System.out.println("Balance: $" + this.balance);
+    }
+
+    @Override
+    public void accrue() {
+        this.balance *= (1 + rate / 100);
+        showBalance();
+    }
+
+    @Override
+    public String toString() {
+        return "[Name: " + this.name + "]\n[Account Number: " + this.accountNumber +"]\n[Balance: " + this.balance + "]\n";
     }
 }
